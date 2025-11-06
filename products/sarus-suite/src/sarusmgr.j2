@@ -299,7 +299,7 @@ function check_build_input() {
     exit 1
   fi
 
-  if [ ! -d "${TMP_DIR}/texture/products/${PRODUCT}" ]
+  if [ ! -d "${TMP_DIR}/deploy/products/${PRODUCT}" ]
   then
     echo "ERROR: \"$PRODUCT\" is not a sarus-suite component"
     exit 1
@@ -367,7 +367,7 @@ function check_fetch_input() {
     exit 1
   fi
 
-  if [ ! -d "${TMP_DIR}/texture/products/${PRODUCT}" ]
+  if [ ! -d "${TMP_DIR}/deploy/products/${PRODUCT}" ]
   then
     echo "ERROR: \"$PRODUCT\" is not a sarus-suite component"
     exit 1
@@ -501,11 +501,11 @@ EOF
   
 }
 
-function setup_texture() {
+function setup_deploy() {
   [ ! -d "${TMP_DIR}" ] && mkdir -p "${TMP_DIR}"
 
-  # Check texture repo local copy presence
-  local PRODUCT="texture"
+  # Check deploy repo local copy presence
+  local PRODUCT="deploy"
   REPO="sarus-suite/${PRODUCT}"
   if [ ! -d "${TMP_DIR}/${PRODUCT}" ]
   then
@@ -519,7 +519,7 @@ function setup_texture() {
 
 function setup_test_env() {
 
-  setup_texture
+  setup_deploy
 
   # Check bats command
   set +e
@@ -542,7 +542,7 @@ function setup_test_env() {
 
 function run_tests() {
   setup_test_env
-  pushd ${TMP_DIR}/texture/tests 1>/dev/null
+  pushd ${TMP_DIR}/deploy/tests 1>/dev/null
   bats .
   popd 1>/dev/null
   
@@ -551,10 +551,10 @@ function run_tests() {
 function build() {
   parse_build_args $@
 
-  setup_texture
+  setup_deploy
   check_build_input || return 1
 
-  local BUILD_COMMAND="${TMP_DIR}/texture/products/${PRODUCT}/build.sh"
+  local BUILD_COMMAND="${TMP_DIR}/deploy/products/${PRODUCT}/build.sh"
   if [ ! -f "${BUILD_COMMAND}" ]
   then
     echo "ERROR: cannot find ${BUILD_COMMAND}"
@@ -567,10 +567,10 @@ function build() {
 function fetch() {
   parse_fetch_args $@
 
-  setup_texture
+  setup_deploy
   check_fetch_input || return 1
 
-  local FETCH_COMMAND="${TMP_DIR}/texture/products/${PRODUCT}/fetch.sh"
+  local FETCH_COMMAND="${TMP_DIR}/deploy/products/${PRODUCT}/fetch.sh"
   if [ ! -f "${FETCH_COMMAND}" ]
   then
     echo "ERROR: cannot find ${FETCH_COMMAND}"

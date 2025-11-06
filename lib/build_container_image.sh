@@ -44,7 +44,7 @@ EOF
   cat <<EOF >>Containerfile
 
 # Sign it
-RUN date +%Y-%m-%dT%H:%M:%S >/etc/texture.build
+RUN date +%Y-%m-%dT%H:%M:%S >/etc/sarus-suite-deploy.build
 CMD ["bash"]
 EOF
 
@@ -79,7 +79,7 @@ function build_container_image() {
 }
 
 function check_build_container_image() {
-  local IMAGE_NAME_PREFIX="texture-build"
+  local IMAGE_NAME_PREFIX="sarus-suite-deploy-build"
 
   if [ -z "${BUILD_OS}" ]
   then

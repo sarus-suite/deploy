@@ -133,7 +133,7 @@ function userspace_setup() {
   ARTIFACT="sarus-suite-${OS_NAME}-${VERSION_ID}-${ARCH}-userspace.tar.gz"	
   if [ ! -f "${ARTIFACT}" ]
   then
-    URL="https://github.com/sarus-suite/texture/releases/latest/download/${ARTIFACT}"
+    URL="https://github.com/sarus-suite/deploy/releases/latest/download/${ARTIFACT}"
     curl -sOL ${URL}
   fi  
   tar xzf ./${ARTIFACT}
@@ -154,7 +154,7 @@ function install_packages() {
   ARTIFACT="sarus-suite-${OS_NAME}-${VERSION_ID}-${ARCH}-packages.tar.gz"	
   if [ ! -f "${ARTIFACT}" ]
   then
-    URL="https://github.com/sarus-suite/texture/releases/latest/download/${ARTIFACT}"
+    URL="https://github.com/sarus-suite/deploy/releases/latest/download/${ARTIFACT}"
     curl -sOL ${URL}
   fi  
   tar xzf ./${ARTIFACT}
