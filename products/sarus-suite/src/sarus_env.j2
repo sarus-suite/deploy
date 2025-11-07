@@ -15,6 +15,7 @@ function get_sarus_env_status() {
 
 function sarus_env_activate() {
   SARUS_PATH=$(dirname $(dirname $(readlink -f "${BASH_SOURCE[0]}")))
+  TMP_PARALLAX_IMAGESTORE="/tmp/${USER}/parallax_imagestore"
   
   if [ -n "$CONTAINERS_CONF" ]
   then
@@ -31,8 +32,22 @@ function sarus_env_activate() {
     export PATH_ORIG=$PATH
   fi
 
+  if [ -n "$PARALLAX_IMAGESTORE" ]
+  then
+    export PARALLAX_IMAGESTORE_ORIG=$PARALLAX_IMAGESTORE
+  else
+    if [ -n "$SCRATCH" ]
+    then
+      export PARALLAX_IMAGESTORE="${SCRATCH}/parallax_imagestore"
+    else
+      export PARALLAX_IMAGESTORE="${TMP_IMAGESTORE}"
+    fi
+    mkdir -p "${PARALLAX_IMAGESTORE}"
+  fi
+
   export CONTAINERS_CONF="${SARUS_PATH}/etc/containers.conf"
   export PATH="${SARUS_PATH}/bin:${PATH}"
+  export PARALLAX_PATH="${SARUS_PATH}/bin/parallax"
   export SARUS_SUITE_GIT_TAG="{{ git_tag }}"
   export SARUS_SUITE_GIT_BRANCH="{{ git_branch }}"
   export SARUS_SUITE_GIT_COMMIT="{{ git_commit }}"
@@ -71,6 +86,14 @@ function sarus_env_deactivate() {
     unset CONTAINERS_CONF_ORIG
   fi
 
+  if [ -n "$PARALLAX_IMAGESTORE_ORIG" ]
+  then
+    unset PARALLAX_IMAGESTORE_ORIG
+  else
+    unset PARALLAX_IMAGESTORE
+  fi
+
+  unset PARALLAX_PATH
   unset -f get_sarus_env_status
   unset -f sarus_env_activate
   unset -f sarus_env_deactivate
