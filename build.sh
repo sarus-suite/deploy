@@ -7,9 +7,9 @@ SCRIPTNAME="$(basename $0)"
 SCRIPT_DIR=$(readlink -f $(dirname $0))
 cd $SCRIPT_DIR
 
-PRODUCTS_TO_FETCH="crun fuse-overlayfs parallax passt"
+PRODUCTS_TO_FETCH="crun fuse-overlayfs parallax passt sarusctl"
 PRODUCTS_TO_BUILD="conmon podman squashfuse"
-PRODUCTS_TO_BUILD_RPM="conmon crun fuse-overlayfs parallax"
+PRODUCTS_TO_BUILD_RPM="conmon crun fuse-overlayfs parallax sarusctl"
 FINAL_PRODUCT_TO_BUILD="sarus-suite"
 
 function print_help() {
@@ -58,7 +58,7 @@ function check_input() {
 
 parse_args $@ || exit 1
 check_input || exit 1
-
+exit 0
 . etc/release.cfg
 
 cd products

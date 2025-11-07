@@ -55,7 +55,7 @@ function get_github_org() {
   local PRODUCT=$1
   local GITHUB_ORG=""
   case "$PRODUCT" in
-    parallax)
+    parallax|sarusctl)
       GITHUB_ORG="sarus-suite"
       ;;      
     conmon|crun|fuse-overlayfs|podman)

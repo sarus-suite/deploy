@@ -1,0 +1,24 @@
+Name:     {{ product }}
+Version:  {{ version }}
+Release:  {{ release }}
+Summary:  CLI written in rust for sarus-suite
+
+License:  BSD
+URL:      https://github.com/sarus-suite/%{name}
+
+%description
+CLI written in rust for sarus-suite
+
+%prep 
+
+%build
+
+%install
+mkdir -p %{buildroot}{{ bindir }}
+cp {{ srcdir }}/%{name} %{buildroot}{{ bindir }}/%{name}
+
+%clean
+
+%files
+%dir {{ bindir }}
+{{ bindir }}/%{name}
