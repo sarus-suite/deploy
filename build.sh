@@ -58,7 +58,6 @@ function check_input() {
 
 parse_args $@ || exit 1
 check_input || exit 1
-exit 0
 . etc/release.cfg
 
 cd products
