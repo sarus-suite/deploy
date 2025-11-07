@@ -33,11 +33,12 @@ rm -rf dist
 
 if [ -z "${VERSION}" ]
 then
-  VERSION=$(git describe --always --tags | tr '-' '_')	
-fi	
+  VERSION=$(git describe --always --tags | tr '-' '_')
+  RELEASE_VERSION="0.0.0-${VERSION}"
+else
+  RELEASE_VERSION=${VERSION}
+fi
 COMMIT=$(git rev-parse HEAD)
-
-RELEASE_VERSION=${VERSION}
 
 sed -i -E -e "/^name = \"sarusctl\"/,/^version \=/ s/^version =.*$/version = \"${RELEASE_VERSION#v}\"/1" Cargo.toml
 
