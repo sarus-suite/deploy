@@ -87,7 +87,7 @@ function detect_system() {
   [ ! -f /etc/os-release ] && fail "ERROR: Cannot detect linux distribution"
   . /etc/os-release
 
-  if [ "$ID_LIKE" == "suse" ]
+  if ( echo " $ID_LIKE " | grep -q " suse " )
   then
     OS_NAME="opensuse"
     OS="${OS_NAME}-${VERSION_ID}"
